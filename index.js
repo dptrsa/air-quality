@@ -52,6 +52,11 @@ function callAirNowApi (zip, date) {
 
     // Create the path for the HTTP request to get the air quality index
 	
+	// Check for and handle null zips
+	if (zip == '') {
+		resolve(`I didn't catch that zip code, can you please repeat it?`);
+	}
+	
 	if (date <= today) {
 		type = 'observation';
 		path = '/aq/observation/zipCode/current/?format=application/json&zipCode=' + zip + '&distance=25&API_KEY=' + airNowApiKey;
