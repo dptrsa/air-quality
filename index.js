@@ -52,11 +52,6 @@ function callAirNowApi (zip, date) {
 
     // Create the path for the HTTP request to get the air quality index
 	
-	// Check for and handle null zips
-	if (zip == '') {
-		resolve(`I didn't catch that zip code, can you please repeat it?`);
-	}
-	
 	if (date <= today) {
 		type = 'observation';
 		path = '/aq/observation/zipCode/current/?format=application/json&zipCode=' + zip + '&distance=25&API_KEY=' + airNowApiKey;
@@ -82,6 +77,10 @@ function callAirNowApi (zip, date) {
 		// TODO: Maybe add wind forecast / actual to agent response.
 		// TODO: Maybe add any local (25mi radius) fire alerts to agent response.
 		// TODO: Are there any agencies that monitor and issue air alerts in response to industrial accidents? Include.
+		
+		if (!datum['AQI']) {
+			resolve(`I didn't quite catch that zip code. Can you please repeat it?`);
+		}
 		
 		if (type == 'observation') {
 			if (date < today) {
