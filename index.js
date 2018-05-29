@@ -88,7 +88,7 @@ function callAirNowApi (zip, date) {
 			} else {
 				tense = 'is';
 			}
-			output = `The AQI ${tense} ${datum['AQI']} (${datum['Category']['Name']}). Can I help you with anything else?`;
+			output = `The AQI ${tense} ${datum['AQI']} (${datum['Category']['Name']}). Would you like to check another zip code?`;
 		} else {
 			output = `The AQI is forecast to be ${datum['AQI']} (${datum['Category']['Name']}). Can I help you with anything else?`;
 		}
