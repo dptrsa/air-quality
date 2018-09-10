@@ -59,28 +59,6 @@ function callAirNowApi (zip, date) {
 		type = 'forecast';
 		path = '/aq/forecast/zipCode/?format=application/json&zipCode=' + zip + '&date=' + date + '&distance=25&API_KEY=' + airNowApiKey;
 	}
-	
-	// BETA. Get user location
-	
-	app.intent('ask_for_permissions_detailed', (conv) => {
-		  // Choose one or more supported permissions to request:
-		  // NAME, DEVICE_PRECISE_LOCATION, DEVICE_COARSE_LOCATION
-		  const options = {
-		    context: 'To address you by name and know your location',
-		    // Ask for more than one permission. User can authorize all or none.
-		    permissions: ['NAME', 'DEVICE_PRECISE_LOCATION'],
-		  };
-		  conv.ask(new Permission(options));
-		});
-	
-	app.intent('ask.for.permission.confirmation', (conv, params, confirmationGranted) => {
-		  const {name} = conv.user;
-		  if (confirmationGranted) {
-		    if (name) {
-		      conv.ask(`I retrieved your location as ${name.display}.`);
-		    }
-		  }
-		});
     
 	// Make the HTTP request to get the aqi
     http.get({host: host, path: path}, (res) => {
@@ -91,6 +69,7 @@ function callAirNowApi (zip, date) {
         let response = JSON.parse(body);
 		let datum = response[0];
 		
+		// TODO: Handle -1 AQI (forecast data not yet available)
 		// TODO: Cache 2 weeks' historical AQI observations in GCP and read from there instead of the AirNow API
 		// TODO: Invsetigate feasibility to offering product suggestions when air quality is bad, or when user asks for them. Ideally 
 		//       suggestions would be carefully curated ads.
