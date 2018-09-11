@@ -38,6 +38,8 @@ exports.airQualityWebhook = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
   });
+  // run firestore test
+  firestoreTest();
 };
 
 function callAirNowApi (zip, date) {
@@ -100,4 +102,24 @@ function callAirNowApi (zip, date) {
       });
     });
   });
+}
+
+// test for firestore
+function firestoreTest () {
+	const admin = require('firebase-admin');
+	const functions = require('firebase-functions');
+
+	console.log('Initializing Firestore');
+	admin.initializeApp(functions.config().firebase);
+	var db = admin.firestore();
+	
+	db.collection('readings').get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+      });
+    })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
 }
