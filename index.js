@@ -114,4 +114,15 @@ function firestoreTest () {
 
 	console.log('Initialize firestore with service account.');
 	admin.initializeApp(functions.config().firebase);
+	
+	var db = admin.firestore();
+	db.collection('readings').get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+      });
+    })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
 }
