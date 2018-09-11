@@ -38,9 +38,7 @@ exports.airQualityWebhook = (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
   });
-  // run firestore test
-  console.log('Triggering firestore test.');
-  firestoreTest();
+  
 };
 
 function callAirNowApi (zip, date) {
@@ -62,6 +60,10 @@ function callAirNowApi (zip, date) {
 		type = 'forecast';
 		path = '/aq/forecast/zipCode/?format=application/json&zipCode=' + zip + '&date=' + date + '&distance=25&API_KEY=' + airNowApiKey;
 	}
+	
+	// run firestore test
+	  console.log('Triggering firestore test.');
+	  firestoreTest();
     
 	// Make the HTTP request to get the aqi
     http.get({host: host, path: path}, (res) => {
