@@ -111,8 +111,5 @@ function firestoreTest () {
 	var serviceAccount = require("/my-weather-4728f-firebase-adminsdk-xx6yw-87697cd02f.json");
 
 	console.log('Initialize firestore with service account.');
-	admin.initializeApp({
-	  credential: admin.credential.cert(serviceAccount),
-	  databaseURL: "https://my-weather-4728f.firebaseio.com"
-	});
+	admin.initializeApp(functions.config().firebase);
 }
