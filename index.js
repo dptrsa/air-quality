@@ -60,10 +60,6 @@ function callAirNowApi (zip, date) {
 		type = 'forecast';
 		path = '/aq/forecast/zipCode/?format=application/json&zipCode=' + zip + '&date=' + date + '&distance=25&API_KEY=' + airNowApiKey;
 	}
-	
-	// run firestore test
-	  console.log('Triggering firestore test.');
-	  firestoreTest();
     
 	// Make the HTTP request to get the aqi
     http.get({host: host, path: path}, (res) => {
@@ -105,6 +101,9 @@ function callAirNowApi (zip, date) {
       });
     });
   });
+  //run firestore test
+  console.log('Triggering firestore test.');
+  firestoreTest();
 }
 
 // test for firestore
