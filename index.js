@@ -69,7 +69,6 @@ function callAirNowApi (zip, date) {
         let response = JSON.parse(body);
 		let datum = response[0];
 		
-		// TODO: Handle -1 AQI (forecast data not yet available)
 		// TODO: Cache 2 weeks' historical AQI observations in GCP and read from there instead of the AirNow API
 		// TODO: Invsetigate feasibility to offering product suggestions when air quality is bad, or when user asks for them. Ideally 
 		//       suggestions would be carefully curated ads.
@@ -78,8 +77,8 @@ function callAirNowApi (zip, date) {
 		// TODO: Maybe add any local (25mi radius) fire alerts to agent response.
 		// TODO: Are there any agencies that monitor and issue air alerts in response to industrial accidents? Include.
 		
-		if (!datum['AQI'] || datum['AQI']===-1) {
-			resolve(`I may have misheard your zip code, or the forecast is not available yet. Would you like to try something else`);
+		if (typeof datum['AQI'] === 'undefined' || datum['AQI']===-1) {
+			resolve(`I may have misheard your zip code, or the forecast is not available yet. Would you like to try again?`);
 		}
 		
 		if (type === 'observation') {
