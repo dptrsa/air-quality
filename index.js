@@ -39,6 +39,7 @@ exports.airQualityWebhook = (req, res) => {
     res.send(JSON.stringify({ 'speech': error, 'displayText': error }));
   });
   // run firestore test
+  console.log('Triggering firestore test.');
   firestoreTest();
 };
 
@@ -106,20 +107,12 @@ function callAirNowApi (zip, date) {
 
 // test for firestore
 function firestoreTest () {
-	const admin = require('firebase-admin');
-	const functions = require('firebase-functions');
+	var admin = require("firebase-admin");
+	var serviceAccount = require("/my-weather-4728f-firebase-adminsdk-xx6yw-87697cd02f.json");
 
-	console.log('Initializing Firestore');
-	admin.initializeApp(functions.config().firebase);
-	var db = admin.firestore();
-	
-	db.collection('readings').get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
-      });
-    })
-    .catch((err) => {
-      console.log('Error getting documents', err);
-    });
+	console.log('Initialize firestore with service account.');
+	admin.initializeApp({
+	  credential: admin.credential.cert(serviceAccount),
+	  databaseURL: "https://my-weather-4728f.firebaseio.com"
+	});
 }
