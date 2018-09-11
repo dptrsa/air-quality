@@ -108,7 +108,7 @@ function callAirNowApi (zip, date) {
 // test for firestore
 function firestoreTest () {
 	var admin = require("firebase-admin");
-	var serviceAccount = require("/my-weather-4728f-firebase-adminsdk-xx6yw-87697cd02f.json");
+	var serviceAccount = require("gs://my-weather-4728f.appspot.com/my-weather-4728f-firebase-adminsdk-xx6yw-87697cd02f.json");
 
 	console.log('Initialize firestore with service account.');
 	admin.initializeApp(functions.config().firebase);
