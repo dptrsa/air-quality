@@ -78,11 +78,11 @@ function callAirNowApi (zip, date) {
 		// TODO: Maybe add any local (25mi radius) fire alerts to agent response.
 		// TODO: Are there any agencies that monitor and issue air alerts in response to industrial accidents? Include.
 		
-		if (typeof datum['AQI'] === 'undefined' || datum['AQI']===-1) {
-			resolve(`I may have misheard your zip code, or the forecast is not available yet. Would you like to try again?`);
-		}
-		
-		if (type === 'observation') {
+		if (typeof datum['AQI'] === 'undefined') {
+			resolve(`I may have misheard your zip code, or air quality measurements are not available yet. Would you like to try again?`);
+		} else if (datum['AQI']===-1) {
+			resolve(`It looks like air quality measurements are not available yet. Would you like to try again?`);
+		} else if (type === 'observation') {
 			if (date < today) {
 				tense = 'was';
 			} else {
