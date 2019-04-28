@@ -13,8 +13,12 @@
 
 'use strict';
 const http = require('http');
-const host = 'airnowapi.org';
-const airNowApiKey = '6D5F2F7E-06C8-48E5-83AD-D6DDC3ADB202';
+
+const host = 'airnowapi.org'; // TODO: rename var similar to below
+const host_accuweather = 'dataservice.accuweather.com';
+
+const airNowApiKey = '6D5F2F7E-06C8-48E5-83AD-D6DDC3ADB202'; // TODO: rename var similar to below
+const api_key_accuweather = '3frbwEKMlDGE7lLG1y76ZREncGFqcUcO';
 
 exports.airQualityWebhook = (req, res) => {
   // Get the zip and date from the request
